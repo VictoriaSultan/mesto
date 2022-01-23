@@ -1,0 +1,19 @@
+.icon__close {
+    width: 32px;
+    height: 32px;
+    background-image: url("../../../images/close-icon-default.svg");
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+}
+
+.icon__close:hover {
+    background-image: url("../../../images/close-icon-hover.svg");
+}
+
+@media screen and (max-width: 767px) {
+    .icon__close {
+        width: 20px;
+        height: 20px;
+    }
+}

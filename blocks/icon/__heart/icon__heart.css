@@ -1,0 +1,17 @@
+.icon__heart {
+    width: 22px;
+    height: 19px;
+    margin: 0;
+    padding: 0;
+    background-image: url("../../../images/heart-icon-default.svg");
+    background-color: transparent;
+    border: none;
+}
+
+.icon__heart:hover {
+    background-image: url("../../../images/heart-icon-hover.svg");
+}
+
+.icon__heart:active {
+    background-image: url("../../../images/heart-icon-active.svg");
+}

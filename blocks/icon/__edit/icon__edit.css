@@ -1,0 +1,15 @@
+.icon__edit {
+    margin: 6px;
+    width: 10px;
+    height: 10px;
+    background-image: url("../../../images/edit-icon-default.svg");
+    background-size: contain;
+}
+
+@media screen and (max-width: 767px) {
+    .icon__edit {
+        width: 7px;
+        height: 7px;
+        margin: 5px;
+    }
+}
