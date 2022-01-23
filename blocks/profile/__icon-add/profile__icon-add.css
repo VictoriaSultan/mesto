@@ -1,4 +1,4 @@
-.icon__add {
+.profile__icon-add {
     margin-top: 6;
     margin-bottom: 6;
     margin-left: auto;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    .icon__add {
+    .profile__icon-add {
         width: 16px;
         height: 16px;
         margin-top: 17px;
