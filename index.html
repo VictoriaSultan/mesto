@@ -21,22 +21,22 @@
                 <img class="avatar" src="images/avatar-round.png" alt="Аватар">
                 <div class="profile__info">
                     <h1 class="profile__title" id="profile-name">Жак-Ив Кусто</h1>
-                    <button type="button" class="profile__edit">
+                    <div class="profile__edit">
                         <div class="icon__edit"></div>
-                    </button>
+                    </div>
                     <p class="profile__subtitle" id="profile-job">Исследователь океана</p>
                 </div>
             </div>
-            <button type="button" class="profile__add">
+            <div class="profile__add">
                 <div class="icon__add"></div>
-            </button> 
+            </div> 
         </section> 
 
         <div class="popup">
             <div class="popup__container">
-                <button type="button" class="popup__close">
+                <div class="popup__close">
                     <div class="icon__close"></div>
-                </button>
+                </div>
                 <form id="edit-form" class="popup__form">
                     <h3 class="popup__title">Редактировать профиль</h3>
                     <input id="name-input" placeholder="Имя" name="name" class="popup__text" minlength="2" maxlength="40" required="">
@@ -96,6 +96,6 @@
         <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
 
+    <script src="index.js"></script>
 </body>
-    <script type="text/javascript" src="index.js"></script>
 </html>
