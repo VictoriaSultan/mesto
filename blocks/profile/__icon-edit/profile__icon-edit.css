@@ -1,4 +1,4 @@
-.icon__edit {
+.profile__icon-edit {
     margin: 6px;
     width: 10px;
     height: 10px;
@@ -7,7 +7,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    .icon__edit {
+    .profile__icon-edit {
         width: 7px;
         height: 7px;
         margin: 5px;

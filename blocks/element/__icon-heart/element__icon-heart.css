@@ -1,4 +1,4 @@
-.icon__heart {
+.element__icon-heart {
     width: 22px;
     height: 19px;
     margin: 0;
@@ -8,10 +8,10 @@
     border: none;
 }
 
-.icon__heart:hover {
+.element__icon-heart:hover {
     background-image: url("../../../images/heart-icon-hover.svg");
 }
 
-.icon__heart:active {
+.element__icon-heart:active {
     background-image: url("../../../images/heart-icon-active.svg");
 }

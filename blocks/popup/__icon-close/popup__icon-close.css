@@ -1,4 +1,4 @@
-.icon__close {
+.popup__icon-close {
     width: 32px;
     height: 32px;
     background-image: url("../../../images/close-icon-default.svg");
@@ -7,12 +7,12 @@
     border: none;
 }
 
-.icon__close:hover {
+.popup__icon-close :hover {
     background-image: url("../../../images/close-icon-hover.svg");
 }
 
 @media screen and (max-width: 767px) {
-    .icon__close {
+    .popup__icon-close  {
         width: 20px;
         height: 20px;
     }
