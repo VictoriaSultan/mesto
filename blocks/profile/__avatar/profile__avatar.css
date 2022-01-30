@@ -1,9 +1,9 @@
-.avatar {
+.profile__avatar {
     margin-right: 30px;
 }
 
 @media screen and (max-width: 767px) {
-    .avatar {
+    .profile__avatar {
         width: 120px;
         margin: 0 auto;
     }

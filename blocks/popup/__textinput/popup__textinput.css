@@ -1,4 +1,4 @@
-.popup__text {
+.popup__textinput {
     width: 358px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
@@ -13,7 +13,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    .popup__text {
+    .popup__textinput {
         max-width: 238px;
         margin: 25px 22px 0 22px;
     }

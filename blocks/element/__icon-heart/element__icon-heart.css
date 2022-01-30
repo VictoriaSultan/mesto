@@ -10,6 +10,7 @@
 
 .element__icon-heart:hover {
     background-image: url("../../../images/heart-icon-hover.svg");
+    cursor: pointer;
 }
 
 .element__icon-heart:active {
