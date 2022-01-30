@@ -11,91 +11,85 @@
 <body class="page">
     <header class="header">
         <img class="header__logo" src="images/logo-transparent.png" alt="Место">
-
     </header>
-
     <main class="content">
-
         <section class="profile">
             <div class="profile__columns">
-                <img class="avatar" src="images/avatar-round.png" alt="Аватар">
+                <img class="profile__avatar" src="images/avatar-round.png" alt="Аватар">
                 <div class="profile__info">
                     <h1 class="profile__title" id="profile-name">Жак-Ив Кусто</h1>
-                    <div class="profile__edit">
-                        <div class="profile__icon-edit"></div>
-                    </div>
+                    <button class="profile__edit">
+                        <img class="profile__icon-edit" src="images/edit-icon-default.svg" alt="Редактировать">
+                    </button>
                     <p class="profile__subtitle" id="profile-job">Исследователь океана</p>
                 </div>
             </div>
-            <div class="profile__add">
-                <div class="profile__icon-add"></div>
-            </div> 
-        </section> 
-
-        <div class="popup">
-            <div class="popup__container">
-                <div class="popup__close">
-                    <div class="popup__icon-close"></div>
-                </div>
-                <form id="edit-form" class="popup__form">
-                    <h3 class="popup__title">Редактировать профиль</h3>
-                    <input id="name-input" placeholder="Имя" name="name" class="popup__text" minlength="2" maxlength="40" required="">
-                    <input id="job-input" placeholder="О себе" name="about" class="popup__text" minlength="2" maxlength="200" required="">
-                    <button type="submit" class="popup__button">Сохранить</button>
-                </form>
-            </div>
-        </div>
-        
+            <button class="profile__add">
+                <img class="profile__icon-add" src="images/add-icon-default.svg" alt="Добавить">
+            </button>
+        </section>
         <section class="elements">
-                    <div class="element">
-                        <img class="element__mask" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
-                        <div class="element__button">
-                            <h3 class="element__title">Карачаевск</h3>
-                            <button type="button" class="element__icon-heart"></button>
-                        </div>
-                    </div>
-                    <div class="element">
-                        <img class="element__mask" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
-                        <div class="element__button">
-                            <h3 class="element__title">Гора Эльбрус</h3>
-                            <button type="button" class="element__icon-heart"></button>
-                        </div>
-                    </div>
-                    <div class="element">
-                        <img class="element__mask" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
-                        <div class="element__button">
-                            <h3 class="element__title">Домбай</h3>
-                            <button type="button" class="element__icon-heart"></button>
-                        </div>
-                    </div>
-                    <div class="element">
-                        <img class="element__mask" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
-                        <div class="element__button">
-                            <h3 class="element__title">Гора Эльбрус</h3>
-                            <button type="button" class="element__icon-heart"></button>
-                        </div>
-                    </div>
-                    <div class="element">
-                        <img class="element__mask" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
-                        <div class="element__button">
-                            <h3 class="element__title">Домбай</h3>
-                            <button type="button" class="element__icon-heart"></button>
-                        </div>
-                    </div>
-                    <div class="element">
-                        <img class="element__mask" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкессия">
-                        <div class="element__button">
-                            <h3 class="element__title">Карачаево-Черкессия</h3>
-                            <button type="button" class="element__icon-heart"></button>
-                        </div>
-                    </div>
+            <div class="element">
+                <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
+                <div class="element__container">
+                    <h2 class="element__title">Карачаевск</h2>
+                    <button type="button" class="element__icon-heart"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img class="element__image" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
+                <div class="element__container">
+                    <h2 class="element__title">Гора Эльбрус</h2>
+                    <button type="button" class="element__icon-heart"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
+                <div class="element__container">
+                    <h2 class="element__title">Домбай</h2>
+                    <button type="button" class="element__icon-heart"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img class="element__image" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
+                <div class="element__container">
+                    <h2 class="element__title">Гора Эльбрус</h2>
+                    <button type="button" class="element__icon-heart"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
+                <div class="element__container">
+                    <h2 class="element__title">Домбай</h2>
+                    <button type="button" class="element__icon-heart"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкессия">
+                <div class="element__container">
+                    <h2 class="element__title">Карачаево-Черкессия</h2>
+                    <button type="button" class="element__icon-heart"></button>
+                </div>
+            </div>
         </section>
     </main>
-
     <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-
+    <div class="popup">
+        <div class="popup__container">
+            <button class="popup__close"></button>
+            <form id="edit-form" class="popup__form">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <input class="popup__textinput" id="name-input" placeholder="Имя" name="name" minlength="2"
+                    maxlength="40" required="">
+                <input class="popup__textinput" id="job-input" placeholder="О себе" name="about" minlength="2"
+                    maxlength="200" required="">
+                <button type="submit" class="popup__button">Сохранить</button>
+            </form>
+        </div>
+    </div>
     <script src="index.js"></script>
 </body>
+
 </html>

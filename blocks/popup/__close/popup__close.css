@@ -5,8 +5,16 @@
     width: 32px;
     height: 32px;
     outline: none;
+    background-image: url("../../../images/close-icon-default.svg");
+    background-size: contain;
     background-color: transparent;
+    background-repeat: no-repeat;
     border: none;
+}
+
+.popup__close:hover {
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {
