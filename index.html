@@ -29,54 +29,12 @@
             </button>
         </section>
         <section class="elements">
-            <div class="element">
-                <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск">
-                <div class="element__container">
-                    <h2 class="element__title">Карачаевск</h2>
-                    <button type="button" class="element__icon-heart"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img class="element__image" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
-                <div class="element__container">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button type="button" class="element__icon-heart"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
-                <div class="element__container">
-                    <h2 class="element__title">Домбай</h2>
-                    <button type="button" class="element__icon-heart"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img class="element__image" src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус">
-                <div class="element__container">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button type="button" class="element__icon-heart"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай">
-                <div class="element__container">
-                    <h2 class="element__title">Домбай</h2>
-                    <button type="button" class="element__icon-heart"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкессия">
-                <div class="element__container">
-                    <h2 class="element__title">Карачаево-Черкессия</h2>
-                    <button type="button" class="element__icon-heart"></button>
-                </div>
-            </div>
         </section>
     </main>
     <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div id="popup-edit-profile" class="popup">
         <div class="popup__container">
             <button class="popup__close"></button>
             <form id="edit-form" class="popup__form">
@@ -89,6 +47,38 @@
             </form>
         </div>
     </div>
+    <div id="popup-add-card" class="popup">
+        <div class="popup__container">
+            <button class="popup__close"></button>
+            <form id="add-card" class="popup__form">
+                <h2 class="popup__title">Новое место</h2>
+                <input class="popup__textinput" id="card-name-input" placeholder="Название" name="name" minlength="2"
+                    maxlength="40" required="">
+                <input class="popup__textinput" id="card-link-input" placeholder="Ссылка на картинку" name="link"
+                    minlength="2" maxlength="200" required="">
+                <button type="submit" class="popup__button">Создать</button>
+            </form>
+        </div>
+    </div>
+    <div id="popup-show-image" class="popup">
+        <div class="popup__background">
+            <button class="popup__close"></button>
+            <img class="popup__image" src="" alt="">
+            <p class="popup__description"></p>
+        </div>
+    </div>
+    <template id="element">
+        <div class="element">
+            <button class="element__delete"></button>
+            <button class="element__open-image">
+                <img class="element__image" src="" alt="">
+            </button>
+            <div class="element__container">
+                <h2 class="element__title"></h2>
+                <button class="element__icon-heart"></button>
+            </div>
+        </div>
+    </template>
     <script src="index.js"></script>
 </body>
 
