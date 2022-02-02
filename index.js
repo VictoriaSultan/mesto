@@ -59,27 +59,24 @@ function editProfileFormHandler(evt) {
 
 function addCardFormHandler(evt) {
     evt.preventDefault();
-    createCard({
-        name: cardNameInput.value,
-        link: cardLinkInput.value
-    });
+    addCard(cardsSection, createCard(cardNameInput.value, cardLinkInput.value));
     addCardForm.reset();
     togglePopupVisibility(popupAddCard);
 }
 
-function createCard(cardData) {
+function createCard(name, link) {
     const cardTemplateClone = cardTemplate.querySelector('.element').cloneNode(true);
 
     cardTemplateClone.querySelector('.element__image').addEventListener('click', function (evt) {
-        popupShowImage.querySelector('.popup__image').src = cardData.link;
-        popupShowImage.querySelector('.popup__image').alt = cardData.name;
-        popupShowImage.querySelector('.popup__description').textContent = cardData.name;
+        popupShowImage.querySelector('.popup__image').src = link;
+        popupShowImage.querySelector('.popup__image').alt = name;
+        popupShowImage.querySelector('.popup__description').textContent = name;
         togglePopupVisibility(popupShowImage);
     });
 
-    cardTemplateClone.querySelector('.element__image').src = cardData.link;
-    cardTemplateClone.querySelector('.element__image').alt = cardData.name;
-    cardTemplateClone.querySelector('.element__title').textContent = cardData.name;
+    cardTemplateClone.querySelector('.element__image').src = link;
+    cardTemplateClone.querySelector('.element__image').alt = name;
+    cardTemplateClone.querySelector('.element__title').textContent = name;
 
     cardTemplateClone.querySelector('.element__delete').addEventListener('click', function (evt) {
         evt.target.closest('.element').remove();
@@ -89,10 +86,16 @@ function createCard(cardData) {
         evt.target.classList.toggle('element__icon-heart_active');
     });
 
-    cardsSection.prepend(cardTemplateClone);
+    return cardTemplateClone;
 }
 
-initialCards.forEach(createCard);
+function addCard(container, cardElement) {
+    container.prepend(cardElement);
+}
+
+initialCards.forEach((cardData) => {
+    addCard(cardsSection, createCard(cardData.name, cardData.link));
+});
 
 editElement.addEventListener('click', openPopup);
 editProfileForm.addEventListener('submit', editProfileFormHandler);
