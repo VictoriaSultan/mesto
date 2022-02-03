@@ -8,13 +8,13 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    margin: 30px 36px 0 36px;
+    margin: 0 36px 0 36px;
     padding-bottom: 13px;
 }
 
 @media screen and (max-width: 767px) {
     .popup__textinput {
         max-width: 238px;
-        margin: 25px 22px 0 22px;
+        margin: 0 22px 0 22px;
     }
 }
