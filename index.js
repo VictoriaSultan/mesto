@@ -3,6 +3,9 @@ const addCardForm = document.querySelector('#add-card');
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const popupAddCard = document.querySelector('#popup-add-card');
 const popupShowImage = document.querySelector('#popup-show-image');
+const popupImage = popupShowImage.querySelector('.popup__image');
+const popupDescription = popupShowImage.querySelector('.popup__description');
+const popupCloseElements = document.querySelectorAll('.popup__close');
 const editProfileButton = document.querySelector('.profile__edit');
 const addCardButton = document.querySelector('.profile__add');
 const nameInput = document.querySelector('#name-input');
@@ -93,26 +96,22 @@ function addCardFormHandler(evt) {
 
 function createCard(name, link) {
     const cardTemplateClone = cardTemplate.querySelector('.element').cloneNode(true);
-
-    cardTemplateClone.querySelector('.element__image').addEventListener('click', function (evt) {
-        popupShowImage.querySelector('.popup__image').src = link;
-        popupShowImage.querySelector('.popup__image').alt = name;
-        popupShowImage.querySelector('.popup__description').textContent = name;
+    const elementImage = cardTemplateClone.querySelector('.element__image');
+    elementImage.addEventListener('click', function (evt) {
+        popupImage.src = link;
+        popupImage.alt = name;
+        popupDescription.textContent = name;
         openPopup(popupShowImage);
     });
-
-    cardTemplateClone.querySelector('.element__image').src = link;
-    cardTemplateClone.querySelector('.element__image').alt = name;
+    elementImage.src = link;
+    elementImage.alt = name;
     cardTemplateClone.querySelector('.element__title').textContent = name;
-
     cardTemplateClone.querySelector('.element__delete').addEventListener('click', function (evt) {
         evt.target.closest('.element').remove();
     });
-
     cardTemplateClone.querySelector('.element__icon-heart').addEventListener('click', function (evt) {
         evt.target.classList.toggle('element__icon-heart_active');
     });
-
     return cardTemplateClone;
 }
 
@@ -128,7 +127,7 @@ editProfileButton.addEventListener('click', openEditProfilePopup);
 editProfileForm.addEventListener('submit', editProfileFormHandler);
 addCardButton.addEventListener('click', openAddCardPopup);
 addCardForm.addEventListener('submit', addCardFormHandler);
-document.querySelectorAll('.popup__close').forEach((element) => {
+popupCloseElements.forEach((element) => {
     element.addEventListener('click', () => {
         closePopup(element.closest('.popup'));
     });
