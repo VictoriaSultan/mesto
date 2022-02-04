@@ -58,7 +58,7 @@ const enableValidation = (validationSettings) => {
         formElement.addEventListener("submit", (evt) => {
             evt.preventDefault();
         });
-        formElement.addEventListener("resetValidation", (evt) => {
+        formElement.addEventListener("reset", (evt) => {
             resetValidation(evt.target, validationSettings);
         });
         initInputs(formElement, validationSettings);
@@ -66,10 +66,12 @@ const enableValidation = (validationSettings) => {
 };
 
 function resetValidation(formElement, validationSettings) {
+    const buttonElement = formElement.querySelector(validationSettings.submitButtonSelector);
     const inputList = Array.from(formElement.querySelectorAll(validationSettings.inputSelector));
     inputList.forEach((inputElement) => {
         invisibleInputError(formElement, inputElement, validationSettings);
     });
+    changeSubmitButtonState(inputList, buttonElement, validationSettings);
 }
 
 enableValidation({
