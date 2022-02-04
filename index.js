@@ -61,7 +61,7 @@ function closePopupWithEscapeHandler(evt) {
     }
 }
 
-function closePopupByClickHandler(evt){
+function closePopupByClickHandler(evt) {
     if (evt.target === this) {
         closePopup(this);
     }
@@ -69,13 +69,16 @@ function closePopupByClickHandler(evt){
 
 function closePopup(popupInstance) {
     popupInstance.classList.remove('popup__opened');
-    const popupForm = popupInstance.querySelector('.popup__form');
-    if (popupForm) {
-        popupForm.dispatchEvent(resetValidationEvent);
-        popupForm.reset();
-    }
     document.removeEventListener('keydown', closePopupWithEscapeHandler);
     popupInstance.removeEventListener('click', closePopupByClickHandler);
+    resetPopupFormIfExist(popupInstance);
+}
+
+function resetPopupFormIfExist(popupInstance) {
+    const popupForm = popupInstance.querySelector('.popup__form');
+    if (popupForm) {
+        popupForm.reset();
+    }
 }
 
 function openPopup(popupInstance) {
@@ -91,6 +94,10 @@ function editProfileFormHandler(evt) {
     closePopup(popupEditProfile);
 }
 
+function addCard(container, cardElement) {
+    container.prepend(cardElement);
+}
+
 function addCardFormHandler(evt) {
     evt.preventDefault();
     addCard(cardsSection, createCard(cardNameInput.value, cardLinkInput.value));
@@ -101,14 +108,14 @@ function addCardFormHandler(evt) {
 function createCard(name, link) {
     const cardTemplateClone = cardTemplate.querySelector('.element').cloneNode(true);
     const elementImage = cardTemplateClone.querySelector('.element__image');
+    elementImage.src = link;
+    elementImage.alt = name;
     elementImage.addEventListener('click', function (evt) {
         popupImage.src = link;
         popupImage.alt = name;
         popupDescription.textContent = name;
         openPopup(popupShowImage);
     });
-    elementImage.src = link;
-    elementImage.alt = name;
     cardTemplateClone.querySelector('.element__title').textContent = name;
     cardTemplateClone.querySelector('.element__delete').addEventListener('click', function (evt) {
         evt.target.closest('.element').remove();
@@ -119,14 +126,9 @@ function createCard(name, link) {
     return cardTemplateClone;
 }
 
-function addCard(container, cardElement) {
-    container.prepend(cardElement);
-}
-
 initialCards.forEach((cardData) => {
     addCard(cardsSection, createCard(cardData.name, cardData.link));
 });
-
 editProfileButton.addEventListener('click', openEditProfilePopup);
 editProfileForm.addEventListener('submit', editProfileFormHandler);
 addCardButton.addEventListener('click', openAddCardPopup);
