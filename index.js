@@ -46,12 +46,14 @@ const initialCards = [{
 const resetValidationEvent = new CustomEvent('resetValidation', {});
 
 function openEditProfilePopup() {
+    editProfileForm.reset();
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(popupEditProfile);
 }
 
 function openAddCardPopup() {
+    addCardForm.reset();
     openPopup(popupAddCard);
 }
 
@@ -71,14 +73,6 @@ function closePopup(popupInstance) {
     popupInstance.classList.remove('popup__opened');
     document.removeEventListener('keydown', closePopupWithEscapeHandler);
     popupInstance.removeEventListener('click', closePopupByClickHandler);
-    resetPopupFormIfExist(popupInstance);
-}
-
-function resetPopupFormIfExist(popupInstance) {
-    const popupForm = popupInstance.querySelector('.popup__form');
-    if (popupForm) {
-        popupForm.reset();
-    }
 }
 
 function openPopup(popupInstance) {
