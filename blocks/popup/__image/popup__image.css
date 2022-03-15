@@ -10,6 +10,7 @@
     .popup__image {
       height: 299px;
       max-width: 240px;
+      object-fit: cover;
     }
   }
   
