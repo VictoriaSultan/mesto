@@ -5,13 +5,13 @@ import {
     FormValidator
 } from "./FormValidator.js";
 
-const editProfileForm = document.querySelector("#edit-form");
-const addCardForm = document.querySelector("#add-card");
+const profileEditForm = document.querySelector("#edit-form");
+const cardAddForm = document.querySelector("#add-card");
 const popupEditProfile = document.querySelector("#popup-edit-profile");
 const popupAddCard = document.querySelector("#popup-add-card");
 const popupCloseElements = document.querySelectorAll(".popup__close");
-const editProfileButton = document.querySelector(".profile__edit");
-const addCardButton = document.querySelector(".profile__add");
+const profileEditButton = document.querySelector(".profile__edit");
+const cardAddButton = document.querySelector(".profile__add");
 const nameInput = document.querySelector("#name-input");
 const jobInput = document.querySelector("#job-input");
 const cardNameInput = document.querySelector("#card-name-input");
@@ -54,17 +54,15 @@ const initialCards = [{
     },
 ];
 
-const resetValidationEvent = new CustomEvent("resetValidation", {});
-
 function openEditProfilePopup() {
-    editProfileForm.reset();
+    profileEditForm.reset();
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     openPopup(popupEditProfile);
 }
 
 function openAddCardPopup() {
-    addCardForm.reset();
+    cardAddForm.reset();
     openPopup(popupAddCard);
 }
 
@@ -106,7 +104,7 @@ function addCard(container, cardElement) {
 function addCardFormHandler(evt) {
     evt.preventDefault();
     addCard(cardsSection, createCard(cardNameInput.value, cardLinkInput.value));
-    addCardForm.reset();
+    cardAddForm.reset();
     closePopup(popupAddCard);
 }
 
@@ -120,23 +118,23 @@ function createCard(name, link) {
     return currentCard.compose();
 }
 
-const editProfileFormValidator = new FormValidator(
+const profileEditFormValidator = new FormValidator(
     validationSettings,
-    editProfileForm
+    profileEditForm
 );
-editProfileFormValidator.enableValidation();
+profileEditFormValidator.enableValidation();
 
-const addCardFormValidator = new FormValidator(validationSettings, addCardForm);
-addCardFormValidator.enableValidation();
+const cardAddFormValidator = new FormValidator(validationSettings, cardAddForm);
+cardAddFormValidator.enableValidation();
 
 initialCards.forEach((cardData) => {
     addCard(cardsSection, createCard(cardData.name, cardData.link));
 });
 
-editProfileButton.addEventListener("click", openEditProfilePopup);
-editProfileForm.addEventListener("submit", editProfileFormHandler);
-addCardButton.addEventListener("click", openAddCardPopup);
-addCardForm.addEventListener("submit", addCardFormHandler);
+profileEditButton.addEventListener("click", openEditProfilePopup);
+profileEditForm.addEventListener("submit", editProfileFormHandler);
+cardAddButton.addEventListener("click", openAddCardPopup);
+cardAddForm.addEventListener("submit", addCardFormHandler);
 popupCloseElements.forEach((element) => {
     element.addEventListener("click", () => {
         closePopup(element.closest(".popup"));
