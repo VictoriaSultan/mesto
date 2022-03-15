@@ -13,6 +13,7 @@ class Card {
     const cardTemplate = document.querySelector(selector).content;
     this._element = cardTemplate.querySelector(".element").cloneNode(true);
     this._elementImage = this._element.querySelector(".element__image");
+    this._buttonLike = this._element.querySelector(".element__icon-heart");
   }
 
   _setContent() {
@@ -27,10 +28,8 @@ class Card {
     });
     this._element
       .querySelector(".element__delete")
-      .addEventListener("click", this._delete);
-    this._element
-      .querySelector(".element__icon-heart")
-      .addEventListener("click", this._like);
+      .addEventListener("click", ()=>{ this._delete(); });
+      this._buttonLike.addEventListener("click", ()=> { this._like(); });
   }
 
   _viewImage() {
@@ -41,11 +40,12 @@ class Card {
   }
 
   _delete(event) {
-    event.target.closest(".element").remove();
+    this._element.remove();
+    this._element = null;
   }
 
   _like(event) {
-    event.target.classList.toggle("element__icon-heart_active");
+    this._buttonLike.classList.toggle("element__icon-heart_active");
   }
 
   compose() {

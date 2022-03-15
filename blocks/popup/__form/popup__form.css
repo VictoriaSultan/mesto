@@ -1,6 +1,5 @@
 .popup__form {
     width: 430px;
-    height: 330px;
 }
 
 @media screen and (max-width: 767px) {
