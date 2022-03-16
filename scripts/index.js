@@ -24,8 +24,8 @@ const validationSettings = {
     inputSelector: ".popup__textinput",
     submitButtonSelector: ".popup__button",
     inactiveButtonClass: "popup__button_inactive",
-    inputErrorClass: "popup__input-error",
-    errorClass: "popup__input-error_active",
+    inputErrorClass: "popup__textinput_invalid",
+    textErrorClass: "popup__text-error_active",
 };
 
 const initialCards = [{
@@ -109,7 +109,7 @@ function addCardFormHandler(evt) {
 }
 
 function createCard(name, link) {
-    let currentCard = new Card({
+    const currentCard = new Card({
             name: name,
             link: link,
         },
