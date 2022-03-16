@@ -1,4 +1,4 @@
-.popup__input-error {
+.popup__text-error {
     display: block;
     font-family: Inter;
     font-style: normal;
@@ -7,13 +7,14 @@
     line-height: 15px;
     color: #ff0000;
     margin: 5px 36px 10px;
-    min-height: 15px;
+    min-height: 30px;
+    opacity: 0;
 }
-.popup__input-error:last-of-type {
+.popup__text-error:last-of-type {
     margin-bottom: 12px;
 }
 @media screen and (max-width: 720px) {
-  .popup__input-error {
+  .popup__text-error {
     width: 238px;
     margin-left: 22px;
     margin-right: 22px;

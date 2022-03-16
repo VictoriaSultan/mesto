@@ -5,7 +5,7 @@ class FormValidator {
     this._submitButtonSelector = setting.submitButtonSelector;
     this._inactiveButtonClass = setting.inactiveButtonClass;
     this._inputErrorClass = setting.inputErrorClass;
-    this._errorClass = setting.errorClass;
+    this._textErrorClass = setting.textErrorClass;
     this._buttonElement = this._formElement.querySelector(
       this._submitButtonSelector
     );
@@ -19,7 +19,7 @@ class FormValidator {
       `.${inputElement.id}-error`
     );
     inputElement.classList.add(this._inputErrorClass);
-    errorInput.classList.add(this._errorClass);
+    errorInput.classList.add(this._textErrorClass);
     errorInput.textContent = inputElement.validationMessage;
   }
 
@@ -30,8 +30,8 @@ class FormValidator {
     if (inputElement.classList.contains(this._inputErrorClass)) {
       inputElement.classList.remove(this._inputErrorClass);
     }
-    if (errorInput.classList.contains(this._errorClass)) {
-      errorInput.classList.remove(this._errorClass);
+    if (errorInput.classList.contains(this._textErrorClass)) {
+      errorInput.classList.remove(this._textErrorClass);
     }
     errorInput.textContent = "";
   }
