@@ -11,13 +11,13 @@
     - Класс Popup базовый, имеет двух наследников, которые создаются для каждого модального окна. Класс и наследники соответствуют описанию из проектной работы.
 
 */
-import './pages/index.css';
-import { Card } from "./scripts/Card.js";
-import { UserInfo } from "./scripts/UserInfo.js";
-import { Section } from "./scripts/Section.js";
-import { FormValidator } from "./scripts/FormValidator.js";
-import { PopupWithForm } from "./scripts/PopupWithForm.js";
-import { PopupWithImage } from "./scripts/PopupWithImage.js";
+import './index.css';
+import { Card } from "../components/Card.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { Section } from "../components/Section.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
 
 const cardAddButton = document.querySelector(".profile__add");
 const cardAddForm = document.querySelector("#add-card");
@@ -71,7 +71,6 @@ const initialCards = [
 ];
 
 const openEditProfilePopup = () => {
-  profileEditForm.reset();
   const userInfo = userInfoInstance.getUserInfo();
   nameInput.value = userInfo.name;
   jobInput.value = userInfo.job;
@@ -79,7 +78,6 @@ const openEditProfilePopup = () => {
 };
 
 const openAddCardPopup = () => {
-  cardAddForm.reset();
   cardAddPopupInstance.open();
 };
 
@@ -92,7 +90,6 @@ const editProfileFormHandler = (evt, inputValues) => {
 const addCardFormHandler = (evt, inputValues) => {
   evt.preventDefault();
   sectionInstance.addItem(createCard(inputValues));
-  cardAddForm.reset();
   cardAddPopupInstance.close();
 };
 
@@ -111,14 +108,13 @@ const createCard = (itemData) => {
 
 const sectionInstance = new Section(
   {
-    items: initialCards,
     renderer: (itemData) => {
-      return createCard(itemData);
+      sectionInstance.addItem(createCard(itemData));
     },
   },
   sectionSelector
 );
-sectionInstance.renderItems();
+sectionInstance.renderItems(initialCards);
 
 const userInfoInstance = new UserInfo(profileNameSelector, profileJobSelector);
 
