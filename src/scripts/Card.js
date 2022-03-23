@@ -1,15 +1,15 @@
-import {
-  openPopup
-} from "./index.js";
+/*
 
-const popupShowImage = document.querySelector("#popup-show-image");
-const popupImage = popupShowImage.querySelector(".popup__image");
-const popupDescription = popupShowImage.querySelector(".popup__description");
+  Свяжите класс Card c попапом. Сделайте так, 
+  чтобы Card принимал в конструктор функцию handleCardClick.
+  Эта функция должна открывать попап с картинкой при клике на карточку.
 
+*/
 class Card {
-  constructor(data, selector) {
+  constructor(data, selector, handleCardClick) {
     this._link = data.link;
     this._name = data.name;
+    this._handleCardClick = handleCardClick;
     const cardTemplate = document.querySelector(selector).content;
     this._element = cardTemplate.querySelector(".element").cloneNode(true);
     this._elementImage = this._element.querySelector(".element__image");
@@ -33,10 +33,10 @@ class Card {
   }
 
   _viewImage() {
-    popupImage.src = this._link;
-    popupImage.alt = this._name;
-    popupDescription.textContent = this._name;
-    openPopup(popupShowImage);
+    this._handleCardClick({
+      link: this._link,
+      name: this._name
+    })
   }
 
   _delete(event) {
