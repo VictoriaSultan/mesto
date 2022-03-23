@@ -11,13 +11,13 @@
     - Класс Popup базовый, имеет двух наследников, которые создаются для каждого модального окна. Класс и наследники соответствуют описанию из проектной работы.
 
 */
-
-import { Card } from "./Card.js";
-import { UserInfo } from "./UserInfo.js";
-import { Section } from "./Section.js";
-import { FormValidator } from "./FormValidator.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { PopupWithImage } from "./PopupWithImage.js";
+import './pages/index.css';
+import { Card } from "./scripts/Card.js";
+import { UserInfo } from "./scripts/UserInfo.js";
+import { Section } from "./scripts/Section.js";
+import { FormValidator } from "./scripts/FormValidator.js";
+import { PopupWithForm } from "./scripts/PopupWithForm.js";
+import { PopupWithImage } from "./scripts/PopupWithImage.js";
 
 const cardAddButton = document.querySelector(".profile__add");
 const cardAddForm = document.querySelector("#add-card");
