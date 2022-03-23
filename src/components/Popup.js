@@ -32,7 +32,7 @@ class Popup {
     }
 
     // Содержит публичные методы open и close, которые отвечают за открытие и закрытие попапа.
-    _open(){
+    open(){
         this._popupElement.classList.add("popup__opened");
         document.addEventListener("keydown", (evt)=>{
             this._handleEscClose(evt)
@@ -42,11 +42,7 @@ class Popup {
         });        
     }
 
-    open(){
-        this._open()
-    } 
-
-    _close(){
+    close(){
         this._popupElement.classList.remove("popup__opened");
         document.removeEventListener("keydown", (evt)=>{
             this._handleEscClose(evt)
@@ -54,10 +50,6 @@ class Popup {
         this._popupElement.removeEventListener("click", (evt)=>{
             this._handleOutlineClose(evt)
         });          
-    }
-
-    close(){
-        this._close()
     }
 
 }

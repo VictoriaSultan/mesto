@@ -71,7 +71,6 @@ const initialCards = [
 ];
 
 const openEditProfilePopup = () => {
-  profileEditForm.reset();
   const userInfo = userInfoInstance.getUserInfo();
   nameInput.value = userInfo.name;
   jobInput.value = userInfo.job;
@@ -79,7 +78,6 @@ const openEditProfilePopup = () => {
 };
 
 const openAddCardPopup = () => {
-  cardAddForm.reset();
   cardAddPopupInstance.open();
 };
 
@@ -92,7 +90,7 @@ const editProfileFormHandler = (evt, inputValues) => {
 const addCardFormHandler = (evt, inputValues) => {
   evt.preventDefault();
   sectionInstance.addItem(createCard(inputValues));
-  cardAddForm.reset();
+  // cardAddForm.reset();
   cardAddPopupInstance.close();
 };
 

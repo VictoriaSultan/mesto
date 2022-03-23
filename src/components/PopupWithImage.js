@@ -14,7 +14,7 @@ class PopupWithImage extends Popup {
   // В методе open класса PopupWithImage нужно вставлять в попап
   // картинку с src изображения и подписью к картинке.
   open(item) {
-    this._open();
+    super.open();
     this._popupImage.src = item.link;
     this._popupImage.alt = item.name;
     this._popupDescription.textContent = item.name;
