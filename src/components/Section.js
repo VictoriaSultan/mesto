@@ -22,7 +22,6 @@
 class Section {
   constructor(data, selector) {
     this._selector = selector;
-    this._items = data.items;
     this._renderer = data.renderer;
     this._sectionElement = document.querySelector(selector);
   }
@@ -31,9 +30,9 @@ class Section {
     this._sectionElement.prepend(element);
   }
 
-  renderItems() {
-    this._items.forEach((item) => {
-      this.addItem(this._renderer(item));
+  renderItems(items) {
+    items.forEach((item) => {
+      this._renderer(item);
     });
   }
 }

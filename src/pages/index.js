@@ -90,7 +90,6 @@ const editProfileFormHandler = (evt, inputValues) => {
 const addCardFormHandler = (evt, inputValues) => {
   evt.preventDefault();
   sectionInstance.addItem(createCard(inputValues));
-  // cardAddForm.reset();
   cardAddPopupInstance.close();
 };
 
@@ -109,14 +108,13 @@ const createCard = (itemData) => {
 
 const sectionInstance = new Section(
   {
-    items: initialCards,
     renderer: (itemData) => {
-      return createCard(itemData);
+      sectionInstance.addItem(createCard(itemData));
     },
   },
   sectionSelector
 );
-sectionInstance.renderItems();
+sectionInstance.renderItems(initialCards);
 
 const userInfoInstance = new UserInfo(profileNameSelector, profileJobSelector);
 
