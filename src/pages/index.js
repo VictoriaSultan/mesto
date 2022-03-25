@@ -12,6 +12,7 @@
 
 */
 import './index.css';
+import { Api } from "../components/Api.js"
 import { Card } from "../components/Card.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Section } from "../components/Section.js";
@@ -19,21 +20,34 @@ import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 
+const profileEditSelector = "#popup-edit-profile";
+const profileNameSelector = "#profile-name";
+const profileAboutSelector = "#profile-about";
+const avatarEditSelector = "#popup-edit-avatar";
+
+const cardAddSelector = "#popup-add-card";
+const popupShowImageSelector = "#popup-show-image";
+const sectionSelector = ".elements";
+const elementTemplateSelector = "#element";
+
 const cardAddButton = document.querySelector(".profile__add");
 const cardAddForm = document.querySelector("#add-card");
 
 const profileEditButton = document.querySelector(".profile__edit");
 const profileEditForm = document.querySelector("#edit-form");
 const nameInput = document.querySelector("#name-input");
-const jobInput = document.querySelector("#job-input");
+const aboutInput = document.querySelector("#about-input");
 
-const profileEditSelector = "#popup-edit-profile";
-const profileNameSelector = "#profile-name";
-const profileJobSelector = "#profile-job";
-const cardAddSelector = "#popup-add-card";
-const popupShowImageSelector = "#popup-show-image";
-const sectionSelector = ".elements";
-const elementTemplateSelector = "#element";
+//test
+
+const profileNameElement = document.querySelector(profileNameSelector);
+const profileAboutElement = document.querySelector(profileAboutSelector);
+const profileAvatarElement = document.querySelector("#profile-avatar");
+const profileEditAvatar = document.querySelector(".profile__avatar-pen");
+const cardRemoveForm = document.querySelector(".element__delete");
+
+//
+
 
 const validationSettings = {
   inputSelector: ".popup__textinput",
@@ -43,43 +57,36 @@ const validationSettings = {
   textErrorClass: "popup__text-error_active",
 };
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+const optionsApi = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-37',
+  headers: {
+    authorization: '30d141e7-4c15-4471-802b-f050ee898489',
+    'Content-Type': 'application/json'
+  }  
+}
+
+const initUserInfo = (userInfo) => {
+  profileNameElement.textContent = userInfo.name;
+  profileAboutElement.textContent = userInfo.about;
+  profileAvatarElement.src = userInfo.avatar;
+}
 
 const openEditProfilePopup = () => {
   const userInfo = userInfoInstance.getUserInfo();
   nameInput.value = userInfo.name;
-  jobInput.value = userInfo.job;
+  aboutInput.value = userInfo.about;
   profileEditPopupInstance.open();
 };
 
 const openAddCardPopup = () => {
   cardAddPopupInstance.open();
 };
+
+//test
+const openEditProfileAvatarPopup = () => {
+  // userInfoInstance.getUserInfo();
+  avatarEditInstance.open();
+}
 
 const editProfileFormHandler = (evt, inputValues) => {
   evt.preventDefault();
@@ -97,14 +104,23 @@ const handleCardClick = (item) => {
   popupImageInstance.open(item);
 };
 
+const handleCardLike = (cardId, like) => {
+  return api.likeCard(cardId, like);
+}
+
 const createCard = (itemData) => {
   const currentCard = new Card(
     itemData,
     elementTemplateSelector,
-    handleCardClick
+    handleCardClick,
+    handleCardLike,
+    "8e59328c79c1db541331998f" // me id
   );
   return currentCard.compose();
 };
+
+
+const api = new Api(optionsApi);
 
 const sectionInstance = new Section(
   {
@@ -114,9 +130,16 @@ const sectionInstance = new Section(
   },
   sectionSelector
 );
-sectionInstance.renderItems(initialCards);
 
-const userInfoInstance = new UserInfo(profileNameSelector, profileJobSelector);
+api.getUserInfo().then((initialCardsData)=>{
+  initUserInfo(initialCardsData);
+})
+
+api.getInitialCards().then((initialCardsData)=>{
+  sectionInstance.renderItems(initialCardsData);
+})
+
+const userInfoInstance = new UserInfo(profileNameSelector, profileAboutSelector);
 
 const profileEditPopupInstance = new PopupWithForm(
   profileEditSelector,
@@ -145,3 +168,11 @@ cardAddButton.addEventListener("click", openAddCardPopup);
 
 const popupImageInstance = new PopupWithImage(popupShowImageSelector);
 popupImageInstance.setEventListeners();
+
+//test
+profileEditAvatar.addEventListener("click", openEditProfileAvatarPopup);
+
+const avatarEditInstance = new PopupWithForm(avatarEditSelector);
+avatarEditInstance.setEventListeners();
+
+//
