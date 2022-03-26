@@ -56,9 +56,7 @@ class Card {
     if (this._liked) {
       this._buttonLike.classList.add(this._likeActiveClass);
     } else {
-      if (this._buttonLike.classList.contains(this._likeActiveClass)) {
-        this._buttonLike.classList.remove(this._likeActiveClass);
-      }
+      this._buttonLike.classList.remove(this._likeActiveClass);
     }
   }
 
@@ -87,7 +85,11 @@ class Card {
   }
 
   _like(event) {
-    this._handleCardLike(this._id, this._liked).then(this._updateLike);
+    this._handleCardLike(this._id, this._liked)
+    .then(this._updateLike)
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   _hasLike(likes) {

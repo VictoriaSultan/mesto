@@ -1,51 +1,51 @@
 import "./index.css";
-import { Api } from "../components/Api.js";
-import { Card } from "../components/Card.js";
-import { UserInfo } from "../components/UserInfo.js";
-import { Section } from "../components/Section.js";
-import { FormValidator } from "../components/FormValidator.js";
-import { PopupWithForm } from "../components/PopupWithForm.js";
-import { PopupWithConfirmation } from "../components/PopupWithConfirmation.js";
-import { PopupWithImage } from "../components/PopupWithImage.js";
+import {
+  Api
+} from "../components/Api.js";
+import {
+  Card
+} from "../components/Card.js";
+import {
+  UserInfo
+} from "../components/UserInfo.js";
+import {
+  Section
+} from "../components/Section.js";
+import {
+  FormValidator
+} from "../components/FormValidator.js";
+import {
+  PopupWithForm
+} from "../components/PopupWithForm.js";
+import {
+  PopupWithConfirmation
+} from "../components/PopupWithConfirmation.js";
+import {
+  PopupWithImage
+} from "../components/PopupWithImage.js";
+import {
+  profileEditSelector,
+  profileNameSelector,
+  profileAboutSelector,
+  profileAvatarSelector,
+  avatarEditSelector,
+  cardAddSelector,
+  cardRemoveSelector,
+  popupShowImageSelector,
+  sectionSelector,
+  elementTemplateSelector,
+  cardAddButton,
+  cardAddForm,
+  profileEditButton,
+  profileEditForm,
+  nameInput,
+  aboutInput,
+  avatarEditArea,
+  avatarEditForm,
+  validationSettings,
+  optionsApi
+} from "../utils/constants.js"
 
-const profileEditSelector = "#popup-edit-profile";
-const profileNameSelector = "#profile-name";
-const profileAboutSelector = "#profile-about";
-const profileAvatarSelector = "#profile-avatar";
-const avatarEditSelector = "#popup-edit-avatar";
-
-const cardAddSelector = "#popup-add-card";
-const cardRemoveSelector = "#popup-remove-card";
-const popupShowImageSelector = "#popup-show-image";
-const sectionSelector = ".elements";
-const elementTemplateSelector = "#element";
-
-const cardAddButton = document.querySelector(".profile__add");
-const cardAddForm = document.querySelector("#add-card");
-
-const profileEditButton = document.querySelector(".profile__edit");
-const profileEditForm = document.querySelector("#edit-form");
-
-const nameInput = document.querySelector("#name-input");
-const aboutInput = document.querySelector("#about-input");
-
-const avatarEditArea = document.querySelector(".profile__avatar-pen");
-const avatarEditForm = document.querySelector("#edit-avatar");
-
-const validationSettings = {
-  inputSelector: ".popup__textinput",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_inactive",
-  inputErrorClass: "popup__textinput_invalid",
-  textErrorClass: "popup__text-error_active",
-};
-
-const optionsApi = {
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-37",
-  headers: {
-    authorization: "30d141e7-4c15-4471-802b-f050ee898489",
-  },
-};
 
 const openEditProfilePopup = () => {
   const userInfo = userInfoInstance.getUserInfo();
@@ -62,30 +62,35 @@ const openEditAvatarPopup = () => {
   avatarEditInstance.open();
 };
 
-const editProfileFormHandler = (evt, inputValues) => {
+const handleProfileFormSubmit = (evt, inputValues) => {
   api.updateProfile(inputValues).then((dataProfile) => {
     userInfoInstance.setUserInfo(dataProfile);
     profileEditPopupInstance.close();
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
-const addCardFormHandler = (evt, inputValues) => {
-  const userData = userInfoInstance.getUserInfo();
+const handleCardAddFormSubmit = (evt, inputValues) => {
   api.addCard(inputValues).then((dataCard) => {
-    sectionInstance.addItem(createCard(dataCard, userData.userId));
+    sectionInstance.addItem(createCard(dataCard));
     cardAddPopupInstance.close();
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
-const removeCardFormHandler = (evt, cardId) => {
+const handleCardRemoveFormSubmit = (evt, cardId) => {
   removeCardIntance.close();
   return api.removeCard(cardId);
 };
 
-const editAvatarFormHandler = (evt, inputValues) => {
+const handleAvatarFormSubmit = (evt, inputValues) => {
   api.setAvatar(inputValues).then((dataProfile) => {
     userInfoInstance.setUserInfo(dataProfile);
     avatarEditInstance.close();
+  }).catch((err) => {
+    console.log(err);
   });
 };
 
@@ -101,24 +106,31 @@ const handleCardRemove = (cardId, remove) => {
   removeCardIntance.open(cardId, remove);
 };
 
-const createCard = (itemData, userId) => {
+const createCard = (itemData) => {
+  const userData = userInfoInstance.getUserInfo();
   const currentCard = new Card(
     itemData,
     elementTemplateSelector,
     handleCardClick,
     handleCardLike,
     handleCardRemove,
-    userId
+    userData.userId
   );
   return currentCard.compose();
 };
-
-let sectionInstance = {};
 
 const userInfoInstance = new UserInfo(
   profileNameSelector,
   profileAboutSelector,
   profileAvatarSelector
+);
+
+const sectionInstance = new Section({
+    renderer: (itemData) => {
+      sectionInstance.addItem(createCard(itemData));
+    },
+  },
+  sectionSelector
 );
 
 const api = new Api(optionsApi);
@@ -128,23 +140,19 @@ api.getUserInfo().then((userData) => {
   userInfoInstance.setUserInfo(userData);
   // Делаем остальные запросы
   api.getInitialCards().then((initialCardsData) => {
-    sectionInstance = new Section(
-      {
-        renderer: (itemData) => {
-          sectionInstance.addItem(createCard(itemData, userData._id));
-        },
-      },
-      sectionSelector
-    );
     sectionInstance.renderItems(initialCardsData.reverse());
+  }).catch((err) => {
+    console.log(err);
   });
+}).catch((err) => {
+  console.log(err);
 });
 
 // Определяем поведение форм
 
 const profileEditPopupInstance = new PopupWithForm(
   profileEditSelector,
-  editProfileFormHandler
+  handleProfileFormSubmit
 );
 profileEditPopupInstance.setEventListeners();
 
@@ -158,7 +166,7 @@ profileEditButton.addEventListener("click", openEditProfilePopup);
 
 const avatarEditInstance = new PopupWithForm(
   avatarEditSelector,
-  editAvatarFormHandler
+  handleAvatarFormSubmit
 );
 avatarEditInstance.setEventListeners();
 
@@ -172,7 +180,7 @@ avatarEditArea.addEventListener("click", openEditAvatarPopup);
 
 const cardAddPopupInstance = new PopupWithForm(
   cardAddSelector,
-  addCardFormHandler
+  handleCardAddFormSubmit
 );
 cardAddPopupInstance.setEventListeners();
 
@@ -183,7 +191,7 @@ cardAddButton.addEventListener("click", openAddCardPopup);
 
 const removeCardIntance = new PopupWithConfirmation(
   cardRemoveSelector,
-  removeCardFormHandler
+  handleCardRemoveFormSubmit
 );
 removeCardIntance.setEventListeners();
 
