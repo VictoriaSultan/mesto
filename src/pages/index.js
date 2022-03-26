@@ -1,31 +1,21 @@
-/*
-
-    - Использованы ES6-классы.
-    - Каждый класс описан в отдельном JS-файле и импортирован в index.js .
-    - Каждый класс выполняет строго одну задачу. Всё, что относится к решению этой задачи, находится в классе.
-    - Для описания взаимодействия между классами используется слабое связывание, то есть внутри классов напрямую не создаются экземпляры других классов.
-    - Экземпляр класса Section создаётся для каждого контейнера, в который требуется отрисовывать элементы. Класс соответствует описанию из проектной работы.
-    - Экземпляр класса Card создаётся для каждой карточки. Класс соответствует описанию из проектной работы.
-    - Экземпляр класса FormValidator создаётся для каждой проверяемой формы. Класс соответствует описанию из проектной работы.
-    - Экземпляр класса UserInfo создается единожды. Класс соответствует описанию из проектной работы.
-    - Класс Popup базовый, имеет двух наследников, которые создаются для каждого модального окна. Класс и наследники соответствуют описанию из проектной работы.
-
-*/
-import './index.css';
-import { Api } from "../components/Api.js"
+import "./index.css";
+import { Api } from "../components/Api.js";
 import { Card } from "../components/Card.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Section } from "../components/Section.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithConfirmation } from "../components/PopupWithConfirmation.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 
 const profileEditSelector = "#popup-edit-profile";
 const profileNameSelector = "#profile-name";
 const profileAboutSelector = "#profile-about";
+const profileAvatarSelector = "#profile-avatar";
 const avatarEditSelector = "#popup-edit-avatar";
 
 const cardAddSelector = "#popup-add-card";
+const cardRemoveSelector = "#popup-remove-card";
 const popupShowImageSelector = "#popup-show-image";
 const sectionSelector = ".elements";
 const elementTemplateSelector = "#element";
@@ -35,19 +25,12 @@ const cardAddForm = document.querySelector("#add-card");
 
 const profileEditButton = document.querySelector(".profile__edit");
 const profileEditForm = document.querySelector("#edit-form");
+
 const nameInput = document.querySelector("#name-input");
 const aboutInput = document.querySelector("#about-input");
 
-//test
-
-const profileNameElement = document.querySelector(profileNameSelector);
-const profileAboutElement = document.querySelector(profileAboutSelector);
-const profileAvatarElement = document.querySelector("#profile-avatar");
-const profileEditAvatar = document.querySelector(".profile__avatar-pen");
-const cardRemoveForm = document.querySelector(".element__delete");
-
-//
-
+const avatarEditArea = document.querySelector(".profile__avatar-pen");
+const avatarEditForm = document.querySelector("#edit-avatar");
 
 const validationSettings = {
   inputSelector: ".popup__textinput",
@@ -58,18 +41,11 @@ const validationSettings = {
 };
 
 const optionsApi = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-37',
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-37",
   headers: {
-    authorization: '30d141e7-4c15-4471-802b-f050ee898489',
-    'Content-Type': 'application/json'
-  }  
-}
-
-const initUserInfo = (userInfo) => {
-  profileNameElement.textContent = userInfo.name;
-  profileAboutElement.textContent = userInfo.about;
-  profileAvatarElement.src = userInfo.avatar;
-}
+    authorization: "30d141e7-4c15-4471-802b-f050ee898489",
+  },
+};
 
 const openEditProfilePopup = () => {
   const userInfo = userInfoInstance.getUserInfo();
@@ -82,22 +58,35 @@ const openAddCardPopup = () => {
   cardAddPopupInstance.open();
 };
 
-//test
-const openEditProfileAvatarPopup = () => {
-  // userInfoInstance.getUserInfo();
+const openEditAvatarPopup = () => {
   avatarEditInstance.open();
-}
+};
 
 const editProfileFormHandler = (evt, inputValues) => {
-  evt.preventDefault();
-  userInfoInstance.setUserInfo(inputValues);
-  profileEditPopupInstance.close();
+  api.updateProfile(inputValues).then((dataProfile) => {
+    userInfoInstance.setUserInfo(dataProfile);
+    profileEditPopupInstance.close();
+  });
 };
 
 const addCardFormHandler = (evt, inputValues) => {
-  evt.preventDefault();
-  sectionInstance.addItem(createCard(inputValues));
-  cardAddPopupInstance.close();
+  const userData = userInfoInstance.getUserInfo();
+  api.addCard(inputValues).then((dataCard) => {
+    sectionInstance.addItem(createCard(dataCard, userData.userId));
+    cardAddPopupInstance.close();
+  });
+};
+
+const removeCardFormHandler = (evt, cardId) => {
+  removeCardIntance.close();
+  return api.removeCard(cardId);
+};
+
+const editAvatarFormHandler = (evt, inputValues) => {
+  api.setAvatar(inputValues).then((dataProfile) => {
+    userInfoInstance.setUserInfo(dataProfile);
+    avatarEditInstance.close();
+  });
 };
 
 const handleCardClick = (item) => {
@@ -106,40 +95,52 @@ const handleCardClick = (item) => {
 
 const handleCardLike = (cardId, like) => {
   return api.likeCard(cardId, like);
-}
+};
 
-const createCard = (itemData) => {
+const handleCardRemove = (cardId, remove) => {
+  removeCardIntance.open(cardId, remove);
+};
+
+const createCard = (itemData, userId) => {
   const currentCard = new Card(
     itemData,
     elementTemplateSelector,
     handleCardClick,
     handleCardLike,
-    "8e59328c79c1db541331998f" // me id
+    handleCardRemove,
+    userId
   );
   return currentCard.compose();
 };
 
+let sectionInstance = {};
+
+const userInfoInstance = new UserInfo(
+  profileNameSelector,
+  profileAboutSelector,
+  profileAvatarSelector
+);
 
 const api = new Api(optionsApi);
 
-const sectionInstance = new Section(
-  {
-    renderer: (itemData) => {
-      sectionInstance.addItem(createCard(itemData));
-    },
-  },
-  sectionSelector
-);
+// Получаем информацию о пользователе
+api.getUserInfo().then((userData) => {
+  userInfoInstance.setUserInfo(userData);
+  // Делаем остальные запросы
+  api.getInitialCards().then((initialCardsData) => {
+    sectionInstance = new Section(
+      {
+        renderer: (itemData) => {
+          sectionInstance.addItem(createCard(itemData, userData._id));
+        },
+      },
+      sectionSelector
+    );
+    sectionInstance.renderItems(initialCardsData.reverse());
+  });
+});
 
-api.getUserInfo().then((initialCardsData)=>{
-  initUserInfo(initialCardsData);
-})
-
-api.getInitialCards().then((initialCardsData)=>{
-  sectionInstance.renderItems(initialCardsData);
-})
-
-const userInfoInstance = new UserInfo(profileNameSelector, profileAboutSelector);
+// Определяем поведение форм
 
 const profileEditPopupInstance = new PopupWithForm(
   profileEditSelector,
@@ -155,6 +156,20 @@ profileEditFormValidator.enableValidation();
 
 profileEditButton.addEventListener("click", openEditProfilePopup);
 
+const avatarEditInstance = new PopupWithForm(
+  avatarEditSelector,
+  editAvatarFormHandler
+);
+avatarEditInstance.setEventListeners();
+
+const avatarEditFormValidator = new FormValidator(
+  validationSettings,
+  avatarEditForm
+);
+avatarEditFormValidator.enableValidation();
+
+avatarEditArea.addEventListener("click", openEditAvatarPopup);
+
 const cardAddPopupInstance = new PopupWithForm(
   cardAddSelector,
   addCardFormHandler
@@ -166,13 +181,11 @@ cardAddFormValidator.enableValidation();
 
 cardAddButton.addEventListener("click", openAddCardPopup);
 
+const removeCardIntance = new PopupWithConfirmation(
+  cardRemoveSelector,
+  removeCardFormHandler
+);
+removeCardIntance.setEventListeners();
+
 const popupImageInstance = new PopupWithImage(popupShowImageSelector);
 popupImageInstance.setEventListeners();
-
-//test
-profileEditAvatar.addEventListener("click", openEditProfileAvatarPopup);
-
-const avatarEditInstance = new PopupWithForm(avatarEditSelector);
-avatarEditInstance.setEventListeners();
-
-//
