@@ -1,28 +1,31 @@
-/*
-    Класс UserInfo отвечает за управление отображением информации о пользователе на странице. Этот класс:
-        Принимает в конструктор объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе.
-
-        Содержит публичный метод getUserInfo, который возвращает объект с данными пользователя. Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
-
-        Содержит публичный метод setUserInfo, который принимает новые данные пользователя и добавляет их на страницу.
-*/
-
 class UserInfo {
-  constructor(userNameSelector, userJobSelector) {
+  constructor(userNameSelector, userAboutSelector, userAvatarSelector) {
     this._userNameElement = document.querySelector(userNameSelector);
-    this._userJobElement = document.querySelector(userJobSelector);
+    this._userAboutElement = document.querySelector(userAboutSelector);
+    this._userAvatarElement = document.querySelector(userAvatarSelector);
+    this._userNameData = "";
+    this._userAboutData = "";
+    this._userAvatarData = "";
+    this._userId = "";
   }
 
   getUserInfo() {
     return {
-      name: this._userNameElement.textContent,
-      job: this._userJobElement.textContent,
+      name: this._userNameData,
+      about: this._userAboutData,
+      avatar: this._userAvatarData,
+      userId: this._userId
     };
   }
 
   setUserInfo(data) {
+    this._userId = data._id;
+    this._userNameData = data.name;
     this._userNameElement.textContent = data.name;
-    this._userJobElement.textContent = data.job;
+    this._userAboutData = data.about;
+    this._userAboutElement.textContent = data.about;
+    this._userAvatarData = data.avatar;
+    this._userAvatarElement.src = data.avatar;
   }
 }
 
