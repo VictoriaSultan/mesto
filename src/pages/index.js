@@ -81,8 +81,10 @@ const handleCardAddFormSubmit = (evt, inputValues) => {
 };
 
 const handleCardRemoveFormSubmit = (evt, cardId) => {
-  removeCardIntance.close();
-  return api.removeCard(cardId);
+  return api.removeCard(cardId)
+    .catch((err)=>{
+      console.log(err)
+    });
 };
 
 const handleAvatarFormSubmit = (evt, inputValues) => {

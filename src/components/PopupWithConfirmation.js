@@ -12,10 +12,10 @@ class PopupWithConfirmation extends Popup {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._submitForm(evt, this._cardId)
-      .then(this._callback)
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(() => {
+        this._callback();
+        this.close();
+      })
     });
   }
 
